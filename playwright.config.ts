@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 const ENV = process.env.ENV || "qa";
 console.log(`Running tests on ${ENV} environment`);
-dotenv.config({path : `config/.env.${ENV}`});
+dotenv.config({ path: `config/.env.${ENV}` });
 
 
 export default defineConfig({
@@ -12,7 +12,7 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  ...(process.env.CI ? { workers: 1 } : {}),
+  ...(process.env.CI ? { workers: 3 } : {}),
   reporter: [
     ["list"],
     ["html", { outputFolder: "reports/html-report", open: "never" }],
@@ -24,7 +24,7 @@ export default defineConfig({
 
   use: {
     baseURL: process.env.BASE_URL,
-    headless: false,
+    headless: !process.env.CI ? false : true,
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     trace: 'on-first-retry'
