@@ -8,16 +8,16 @@ on:
   pull_request:
     branches: [master]
   workflow_dispatch:
-    # inputs:
-    #   environment:
-    #     description: 'Select environment'
-    #     required: true
-    #     default: 'QA'
-    #     type: choice
-    #     options:
-    #       - QA
-    #       - stage
-    #       - dev
+    inputs:
+      environment:
+        description: 'Select environment'
+        required: true
+        default: 'QA'
+        type: choice
+        options:
+          - QA
+          - stage
+          - dev
 
 jobs:
   test:
