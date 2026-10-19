@@ -33,14 +33,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24
-          #cache: 'npm'
+          cache: 'npm'
 
-      # - name: Cache Playwright browsers
-      #   id: playwright-cache
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: ~/.cache/ms-playwright
-      #     key: playwright-${{ hashFiles('package-lock.json') }}
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ hashFiles('package-lock.json') }}
 
       - name: Install dependencies
         run: npm ci
@@ -49,9 +49,9 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps chromium
 
-      # - name: Install Playwright OS deps only (if cached)
-      #   if: steps.playwright-cache.outputs.cache-hit == 'true'
-      #   run: npx playwright install-deps chromium
+      - name: Install Playwright OS deps only (if cached)
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
 
       # reportingLabs run history: powers the Trend chart, new vs known
       # failures, flaky dots and "got slower". One history per environment.
